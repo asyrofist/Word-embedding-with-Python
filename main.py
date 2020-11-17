@@ -1,6 +1,7 @@
 import streamlit
 import re
 import numpy as np
+import gensim
 from gensim.models import Word2Vec
 from nltk.corpus import gutenberg
 from multiprocessing import Pool
