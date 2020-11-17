@@ -70,13 +70,7 @@ elif  dataset == 'google':
     kata = [word for word in vocabulary]
     col2.dataframe(kata)
 
-    # Model
-    st.sidebar.subheader("Model Parameter")
-    mode_value = st.sidebar.selectbox('What mode?',[0, 1])
-    size_value = st.sidebar.slider('What mode?', 0, 1000, 100)
-    window_value = st.sidebar.slider('What mode?', 0, 10, 3)
-    iteration_value = st.sidebar.slider('What mode?', 0, 100, 10)
-    
+    # Model    
     filename = 'GoogleNews-vectors-negative300.bin.gz'
     model = KeyedVectors.load_word2vec_format(filename, binary=True)
 
