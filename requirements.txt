@@ -3,4 +3,4 @@ numpy>=1.18.5
 gensim>=3.6.0
 multiprocess>=0.70.10
 scipy>=1.4.1
-http://gitub.com/brandontrabucco/glove
+glove_python
