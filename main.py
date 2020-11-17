@@ -42,8 +42,8 @@ model = Word2Vec.load('word2vec_model')
 
 # evaluation
 vocabulary = build_lexicon(sentences)
-opsi = st.selectbox('What mode?',[0, 1])
-options = st.multiselect('What word do you choose?',vocabulary)
-st.write(options)
-# hasil_cosine = cosine_similarity(model[options1], model[options2])
-# st.write(hasil_cosine)
+kata = [word for word in vocabulary]
+st.write(kata)
+st.subheader("PIlih kata")
+kata_value = st.sidebar.selectbox('What mode?',kata)
+model.most_similar(kata[kata_value])
