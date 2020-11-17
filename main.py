@@ -22,7 +22,7 @@ def build_lexicon(corpus):
     return lexicon
 
 st.header("Word2Vec")
-dataset = st.selectbox('What dataset do you use?',['guttenberg', 'google'])
+dataset = st.selectbox('What dataset do you use?',['guttenberg', 'wik8', 'google'])
 
 if dataset == 'guttenberg':
     # preprocess
@@ -51,6 +51,27 @@ if dataset == 'guttenberg':
 #     model.save('word2vec_model')
 #     model = Word2Vec.load('word2vec_model')
 
+    kata_value = st.selectbox('What mode?',kata)
+    hasil = model.most_similar(kata_value)
+    st.dataframe(hasil)
+    
+elif  dataset == 'wiki8':
+    # preprocess
+    col1, col2 = st.beta_columns([3,1])
+    col1.subheader("Dataset")
+    sentences = word2vec.Text8Corpus('enwik8')
+    col1.dataframe(sentences)
+
+    # vocabulary
+    col2.subheader("Vocabulary")
+    vocabulary = build_lexicon(sentences)
+    kata = [word for word in vocabulary]
+    col2.dataframe(kata)
+
+    # Model    
+    filename = 'GoogleNews-vectors-negative300.bin.gz'
+    model = word2vec.Word2Vec(sentences, size=200, hs=1)
+    model.wv.most_similar(positive=['woman', 'king'], negative=['man'], topn=1)
     kata_value = st.selectbox('What mode?',kata)
     hasil = model.most_similar(kata_value)
     st.dataframe(hasil)
