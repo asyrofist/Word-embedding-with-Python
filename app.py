@@ -1,11 +1,7 @@
 import streamlit as st
 import re
 import numpy as np
-import nltk
-import glove
 from nltk.corpus import gutenberg
-from glove import Corpus
-from glove import Glove
 from gensim.models import Word2Vec
 from gensim.models import KeyedVectors
 from multiprocessing import Pool
@@ -24,67 +20,32 @@ def build_lexicon(corpus):
         lexicon.update([word for word in doc])
     return lexicon
 
-pembanding = st.selectbox("What Word Embedded?", ['word2vec', 'doc2vec', 'glove'])
-if pembanding == 'glove':
-    st.subheader("Glove")
-    # preprocess
-    col1, col2 = st.beta_columns([3,1])
-    col1.subheader("Dataset")
-    sentences = list(gutenberg.sents('shakespeare-hamlet.txt'))   # import the corpus and convert into a list
-    for i in range(len(sentences)):
-        sentences[i] = [word.lower() for word in sentences[i] if re.match('^[a-zA-Z]+', word)]
-    col1.dataframe(sentences)
+st.subheader("Word2Vec")
+# preprocess
+col1, col2 = st.beta_columns([3,1])
+col1.subheader("Dataset")
+sentences = list(gutenberg.sents('shakespeare-hamlet.txt'))   # import the corpus and convert into a list
+for i in range(len(sentences)):
+    sentences[i] = [word.lower() for word in sentences[i] if re.match('^[a-zA-Z]+', word)]
+col1.dataframe(sentences)
 
-    # vocabulary
-    col2.subheader("Vocabulary")
-    vocabulary = build_lexicon(sentences)
-    kata = [word for word in vocabulary]
-    col2.dataframe(kata)
-    
-    # Model
-    st.sidebar.subheader("Model Parameter")
-    window_value = st.sidebar.slider('How many window model?', 0, 10, 3)
-    size_value = st.sidebar.slider('How many size model?', 0, 1000, 100)
-    learning_value = st.sidebar.slider('How many iteration?', 0, 0.1, 0.05)
-    epoch_value = st.sidebar.slider('How many iteration?', 0, 100, 30)
-    
-    corpus = Corpus()
-    corpus.fit(sentences, window = window_value)    # window parameter denotes the distance of context
-    glove = Glove(no_components = size_value, learning_rate = learning_value)
-    glove.fit(matrix = corpus.matrix, epochs = epoch_value, no_threads = Pool()._processes, verbose = True)
-    glove.add_dictionary(corpus.dictionary)    #  supply a word-id dictionary to allow similarity queries
+# vocabulary
+col2.subheader("Vocabulary")
+vocabulary = build_lexicon(sentences)
+kata = [word for word in vocabulary]
+col2.dataframe(kata)
 
-    kata_value = st.selectbox('What mode?',kata)
-    hasil = glove.most_similar(kata_value)
-    st.dataframe(hasil)    
+# Model
+st.sidebar.subheader("Model Parameter")
+mode_value = st.sidebar.selectbox('What mode?',[0, 1])
+size_value = st.sidebar.slider('How many size model?', 0, 1000, 100)
+window_value = st.sidebar.slider('How many window model?', 0, 10, 3)
+iteration_value = st.sidebar.slider('How many iteration?', 0, 100, 10)
 
-elif pembanding == 'word2vec':
-    st.subheader("Word2Vec")
-    # preprocess
-    col1, col2 = st.beta_columns([3,1])
-    col1.subheader("Dataset")
-    sentences = list(gutenberg.sents('shakespeare-hamlet.txt'))   # import the corpus and convert into a list
-    for i in range(len(sentences)):
-        sentences[i] = [word.lower() for word in sentences[i] if re.match('^[a-zA-Z]+', word)]
-    col1.dataframe(sentences)
-
-    # vocabulary
-    col2.subheader("Vocabulary")
-    vocabulary = build_lexicon(sentences)
-    kata = [word for word in vocabulary]
-    col2.dataframe(kata)
-
-    # Model
-    st.sidebar.subheader("Model Parameter")
-    mode_value = st.sidebar.selectbox('What mode?',[0, 1])
-    size_value = st.sidebar.slider('How many size model?', 0, 1000, 100)
-    window_value = st.sidebar.slider('How many window model?', 0, 10, 3)
-    iteration_value = st.sidebar.slider('How many iteration?', 0, 100, 10)
-
-    model = Word2Vec(sentences = sentences, size = size_value, sg = mode_value, window = window_value, min_count = 1, iter = iteration_value, workers = Pool()._processes)
-    model.init_sims(replace = True)
-    #     model.save('word2vec_model')
-    #     model = Word2Vec.load('word2vec_model')
-    kata_value = st.selectbox('What mode?',kata)
-    hasil = model.most_similar(kata_value)
-    st.dataframe(hasil)
+model = Word2Vec(sentences = sentences, size = size_value, sg = mode_value, window = window_value, min_count = 1, iter = iteration_value, workers = Pool()._processes)
+model.init_sims(replace = True)
+#     model.save('word2vec_model')
+#     model = Word2Vec.load('word2vec_model')
+kata_value = st.selectbox('What mode?',kata)
+hasil = model.most_similar(kata_value)
+st.dataframe(hasil)
