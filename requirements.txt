@@ -1,4 +1,4 @@
-nltk>=3.2.5
+nltk
 glove_python
 numpy
 gensim
