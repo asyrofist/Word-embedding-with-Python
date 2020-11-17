@@ -35,7 +35,7 @@ model = Word2Vec.load('word2vec_model')
 
 # evaluation
 model.most_similar('hamlet')
-options = st.multiselect('What word do you choose?',sentences,['king', 'queen'])
+options = st.multiselect('What word do you choose?',sentences)
 v1 = model['king']
 v2 = model['queen']
 hasil_cosine = cosine_similarity(v1, v2)
