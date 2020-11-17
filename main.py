@@ -21,17 +21,18 @@ def build_lexicon(corpus):
         lexicon.update([word for word in doc])
     return lexicon
 
-# preprocess
 st.header("Word2Vec")
-st.subheader("Dataset")
+
+# preprocess
 col1, col2 = st.beta_columns([3,1])
+col1.subheader("Dataset")
 sentences = list(gutenberg.sents('shakespeare-hamlet.txt'))   # import the corpus and convert into a list
 for i in range(len(sentences)):
     sentences[i] = [word.lower() for word in sentences[i] if re.match('^[a-zA-Z]+', word)]
 col1.dataframe(sentences)
 
 # vocabulary
-st.subheader("Vocabulary")
+col2.subheader("Vocabulary")
 vocabulary = build_lexicon(sentences)
 kata = [word for word in vocabulary]
 col2.dataframe(kata)
@@ -52,6 +53,5 @@ model = Word2Vec.load('word2vec_model')
 
 st.subheader("PIlih kata")
 kata_value = st.selectbox('What mode?',kata)
-st.write(kata_value)
 hasil = model.most_similar(kata_value)
 st.dataframe(hasil)
