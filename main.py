@@ -19,16 +19,23 @@ st.header("Word2Vec")
 sentences = list(gutenberg.sents('shakespeare-hamlet.txt'))   # import the corpus and convert into a list
 for i in range(len(sentences)):
     sentences[i] = [word.lower() for word in sentences[i] if re.match('^[a-zA-Z]+', word)]
-st.write(sentences)
+st.dataframe(sentences)
 
 # Model
-model = Word2Vec(sentences = sentences, size = 100, sg = 1, window = 3, min_count = 1, iter = 10, workers = Pool()._processes)
+st.sidebar.subheader("Model Parameter")
+mode_value = st.sidebar.selectbox('What mode?',[0, 1])
+size_value = st.sidebar.slider('What mode?', 0, 1000, 100)
+window_value = st.sidebar.slider('What mode?', 0, 10, 3)
+iteration_value = st.sidebar.slider('What mode?', 0, 100, 10)
+
+model = Word2Vec(sentences = sentences, size = size_value, sg = mode_value, window = window_value, min_count = 1, iter = iteration_value, workers = Pool()._processes)
 model.init_sims(replace = True)
 model.save('word2vec_model')
 model = Word2Vec.load('word2vec_model')
 
 # evaluation
 model.most_similar('hamlet')
+options = st.multiselect('What word do you choose?',['Green', 'Yellow', 'Red', 'Blue'],['king', 'queen'])
 v1 = model['king']
 v2 = model['queen']
 hasil_cosine = cosine_similarity(v1, v2)
