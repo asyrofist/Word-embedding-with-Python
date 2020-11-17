@@ -44,6 +44,8 @@ model = Word2Vec.load('word2vec_model')
 vocabulary = build_lexicon(sentences)
 kata = [word for word in vocabulary]
 st.write(kata)
+
 st.subheader("PIlih kata")
 kata_value = st.sidebar.selectbox('What mode?',kata)
-model.most_similar(kata[kata_value])
+hasil = model.most_similar(kata[kata_value])
+st.write(hasil)
