@@ -37,7 +37,7 @@ iteration_value = st.sidebar.slider('What mode?', 0, 100, 10)
 
 model = Word2Vec(sentences = sentences, size = size_value, sg = mode_value, window = window_value, min_count = 1, iter = iteration_value, workers = Pool()._processes)
 model.init_sims(replace = True)
-model.save('word2vec_model')
+# model.save('word2vec_model')
 model = Word2Vec.load('word2vec_model')
 
 # evaluation
