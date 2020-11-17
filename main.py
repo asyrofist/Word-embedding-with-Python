@@ -4,11 +4,14 @@ import numpy as np
 import nltk
 from nltk.corpus import gutenberg
 from gensim.models import Word2Vec
+from gensim.models import KeyedVectors
 from multiprocessing import Pool
 from scipy import spatial
+import wget
 
 nltk.download('gutenberg')
 nltk.download('punkt')
+wget -c "https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz"
 
 # define a function that computes cosine similarity between two words
 def cosine_similarity(v1, v2):
@@ -76,8 +79,6 @@ if  dataset == 'google':
     window_value = st.sidebar.slider('What mode?', 0, 10, 3)
     iteration_value = st.sidebar.slider('What mode?', 0, 100, 10)
     
-    wget -c "https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz"
-    from gensim.models import KeyedVectors
     filename = 'GoogleNews-vectors-negative300.bin.gz'
     model = KeyedVectors.load_word2vec_format(filename, binary=True)
 
