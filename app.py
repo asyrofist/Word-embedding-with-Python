@@ -1,5 +1,4 @@
 import streamlit as st
-
 import re
 import numpy as np
 from nltk.corpus import gutenberg
@@ -7,8 +6,8 @@ from gensim.models import Word2Vec
 from gensim.models import KeyedVectors
 from multiprocessing import Pool
 from scipy import spatial
-from glove import Corpus 
 from glove import Glove
+from glove import Corpus
 
 import nltk
 nltk.download('gutenberg')
