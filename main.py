@@ -17,7 +17,8 @@ def cosine_similarity(v1, v2):
 def build_lexicon(corpus):
     lexicon = set()
     for doc in corpus:
-        lexicon.update([word for word in doc.split()])
+#         lexicon.update([word for word in doc.split()])
+        lexicon.update([word for word in doc])
     return lexicon
 
 # preprocess
