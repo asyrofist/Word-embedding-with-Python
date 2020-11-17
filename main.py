@@ -7,9 +7,6 @@ from gensim.models import Word2Vec
 from gensim.models import KeyedVectors
 from multiprocessing import Pool
 from scipy import spatial
-import wget
-
-wget -c "https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz"
 
 nltk.download('gutenberg')
 nltk.download('punkt')
