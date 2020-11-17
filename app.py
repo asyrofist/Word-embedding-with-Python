@@ -7,6 +7,7 @@ from gensim.models import KeyedVectors
 from multiprocessing import Pool
 from scipy import spatial
 
+import nltk
 nltk.download('gutenberg')
 nltk.download('punkt')
 
