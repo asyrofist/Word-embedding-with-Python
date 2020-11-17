@@ -40,7 +40,7 @@ model.save('word2vec_model')
 model = Word2Vec.load('word2vec_model')
 
 # evaluation
-vocabulary = build_lexicon(cleaned_text)
+vocabulary = build_lexicon(sentences)
 options = st.multiselect('What word do you choose?',vocabulary)
 v1 = model['king']
 v2 = model['queen']
