@@ -1,6 +1,7 @@
 import streamlit as st
 import re
 import numpy as np
+import nltk
 from nltk.corpus import gutenberg
 from gensim.models import Word2Vec
 from gensim.models import KeyedVectors
@@ -9,7 +10,6 @@ from scipy import spatial
 from glove import Glove
 from glove import Corpus
 
-import nltk
 nltk.download('gutenberg')
 nltk.download('punkt')
 
