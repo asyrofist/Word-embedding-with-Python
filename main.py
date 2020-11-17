@@ -11,7 +11,6 @@ import wget
 
 nltk.download('gutenberg')
 nltk.download('punkt')
-wget -c "https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz"
 
 # define a function that computes cosine similarity between two words
 def cosine_similarity(v1, v2):
