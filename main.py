@@ -42,9 +42,8 @@ model = Word2Vec.load('word2vec_model')
 
 # evaluation
 vocabulary = build_lexicon(sentences)
-options1 = st.multiselect('What word do you choose?',vocabulary)
-st.write(options1)
-options2 = st.multiselect('What word do you choose?',vocabulary)
-st.write(options2)
+opsi = st.selectbox('What mode?',[0, 1])
+options = st.multiselect('What word do you choose?',vocabulary)
+st.write(options)
 # hasil_cosine = cosine_similarity(model[options1], model[options2])
 # st.write(hasil_cosine)
