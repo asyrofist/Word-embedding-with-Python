@@ -7,8 +7,6 @@ from gensim.models import Word2Vec
 from multiprocessing import Pool
 from scipy import spatial
 
-from glove import Glove, Corpus
-
 nltk.download('gutenberg')
 nltk.download('punkt')
 
