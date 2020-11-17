@@ -3,9 +3,9 @@ import re
 import numpy as np
 import nltk
 from nltk.corpus import gutenberg
-from glove import Corpus, Glove
+from glove import Corpus
+from glove import Glove
 from gensim.models import Word2Vec
-from gensim.models import word2vec
 from gensim.models import KeyedVectors
 from multiprocessing import Pool
 from scipy import spatial
