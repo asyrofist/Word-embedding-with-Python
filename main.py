@@ -1,4 +1,4 @@
-import streamlit
+import streamlit as st
 import re
 import numpy as np
 import nltk
