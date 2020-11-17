@@ -1,5 +1,5 @@
 glove_python
-nltk==3.2.5
+nltk>=3.2.5
 numpy
 gensim
 multiprocess
