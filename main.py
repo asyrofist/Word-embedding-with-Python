@@ -55,7 +55,7 @@ if dataset_vec == 'guttenberg':
     hasil = model.most_similar(kata_value)
     st.dataframe(hasil)
 
-if  dataset == 'google':
+elif  dataset == 'google':
     # preprocess
     col1, col2 = st.beta_columns([3,1])
     col1.subheader("Dataset")
