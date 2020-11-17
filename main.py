@@ -1,7 +1,7 @@
 import streamlit
 import re
 import numpy as np
-from gensim.models import Word2Vec
+# from gensim.models import Word2Vec
 from nltk.corpus import gutenberg
 from multiprocessing import Pool
 from scipy import spatial
@@ -20,15 +20,15 @@ for i in range(len(sentences)):
     sentences[i] = [word.lower() for word in sentences[i] if re.match('^[a-zA-Z]+', word)]
 st.write(sentences)
 
-# Model
-model = Word2Vec(sentences = sentences, size = 100, sg = 1, window = 3, min_count = 1, iter = 10, workers = Pool()._processes)
-model.init_sims(replace = True)
-model.save('word2vec_model')
-model = Word2Vec.load('word2vec_model')
+# # Model
+# model = Word2Vec(sentences = sentences, size = 100, sg = 1, window = 3, min_count = 1, iter = 10, workers = Pool()._processes)
+# model.init_sims(replace = True)
+# model.save('word2vec_model')
+# model = Word2Vec.load('word2vec_model')
 
-# evaluation
-model.most_similar('hamlet')
-v1 = model['king']
-v2 = model['queen']
-hasil_cosine = cosine_similarity(v1, v2)
-st.write(hasil_cosine)
+# # evaluation
+# model.most_similar('hamlet')
+# v1 = model['king']
+# v2 = model['queen']
+# hasil_cosine = cosine_similarity(v1, v2)
+# st.write(hasil_cosine)
