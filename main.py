@@ -24,7 +24,7 @@ def build_lexicon(corpus):
 # preprocess
 st.header("Word2Vec")
 st.subheader("Dataset")
-col1, col2 = st.beta_container([3,1])
+col1, col2 = st.beta_columns([3,1])
 sentences = list(gutenberg.sents('shakespeare-hamlet.txt'))   # import the corpus and convert into a list
 for i in range(len(sentences)):
     sentences[i] = [word.lower() for word in sentences[i] if re.match('^[a-zA-Z]+', word)]
