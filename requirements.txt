@@ -1,6 +1,0 @@
-streamlit
-numpy
-gensim
-nltk
-multiprocessing
-scipy
