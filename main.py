@@ -47,7 +47,7 @@ kata = [word for word in vocabulary]
 st.dataframe(kata)
 
 st.subheader("PIlih kata")
-kata_value = st.sidebar.selectbox('What mode?',kata)
+kata_value = st.selectbox('What mode?',kata)
 st.write(kata_value)
-hasil = model.most_similar(kata[0])
-st.write(hasil)
+hasil = model.most_similar(kata)
+st.dataframe(hasil)
