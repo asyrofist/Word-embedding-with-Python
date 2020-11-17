@@ -40,9 +40,9 @@ col2.dataframe(kata)
 # Model
 st.sidebar.subheader("Model Parameter")
 mode_value = st.sidebar.selectbox('What mode?',[0, 1])
-size_value = st.sidebar.slider('What mode?', 0, 1000, 100)
-window_value = st.sidebar.slider('What mode?', 0, 10, 3)
-iteration_value = st.sidebar.slider('What mode?', 0, 100, 10)
+size_value = st.sidebar.slider('How many size model?', 0, 1000, 100)
+window_value = st.sidebar.slider('How many window model?', 0, 10, 3)
+iteration_value = st.sidebar.slider('How many iteration?', 0, 100, 10)
 
 model = Word2Vec(sentences = sentences, size = size_value, sg = mode_value, window = window_value, min_count = 1, iter = iteration_value, workers = Pool()._processes)
 model.init_sims(replace = True)
