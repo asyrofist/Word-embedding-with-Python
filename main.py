@@ -22,9 +22,9 @@ def build_lexicon(corpus):
     return lexicon
 
 st.header("Word2Vec")
-dataset_vec = st.selectbox('What dataset do you use?',['guttenberg', 'google'])
+dataset = st.selectbox('What dataset do you use?',['guttenberg', 'google'])
 
-if dataset_vec == 'guttenberg':
+if dataset == 'guttenberg':
     # preprocess
     col1, col2 = st.beta_columns([3,1])
     col1.subheader("Dataset")
