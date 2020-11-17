@@ -59,7 +59,7 @@ elif  dataset == 'wiki8':
     # preprocess
     col1, col2 = st.beta_columns([3,1])
     col1.subheader("Dataset")
-    sentences = word2vec.Text8Corpus('enwik8')
+    sentences = Word2Vec.Text8Corpus('enwik8')
     col1.dataframe(sentences)
 
     # vocabulary
@@ -70,7 +70,7 @@ elif  dataset == 'wiki8':
 
     # Model    
     filename = 'GoogleNews-vectors-negative300.bin.gz'
-    model = word2vec.Word2Vec(sentences, size=200, hs=1)
+    model = Word2Vec(sentences, size=200, hs=1)
     model.wv.most_similar(positive=['woman', 'king'], negative=['man'], topn=1)
     kata_value = st.selectbox('What mode?',kata)
     hasil = model.most_similar(kata_value)
