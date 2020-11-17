@@ -92,7 +92,7 @@ elif  dataset == 'google':
     col2.dataframe(kata)
 
     # Model    
-    filename = 'GoogleNews-vectors-negative300.bin.gz'
+    filename = 'https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz'
     model = KeyedVectors.load_word2vec_format(filename, binary=True)
 
     kata_value = st.selectbox('What mode?',kata)
