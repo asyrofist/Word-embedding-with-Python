@@ -23,9 +23,23 @@ def build_lexicon(corpus):
 
 model_dataset = st.selectbox('Word Embedding apa yang diinginkan?', ['wordvec', 'model_glove'])
 if model_dataset == 'model_glove':
-    st.subheader("Glove")
+    st.subheader("Model Glove")
+    # preprocess
+    col1, col2 = st.beta_columns([3,1])
+    col1.subheader("Dataset")
+    sentences = list(gutenberg.sents('shakespeare-hamlet.txt'))   # import the corpus and convert into a list
+    for i in range(len(sentences)):
+        sentences[i] = [word.lower() for word in sentences[i] if re.match('^[a-zA-Z]+', word)]
+    col1.dataframe(sentences)
+
+    # vocabulary
+    col2.subheader("Vocabulary")
+    vocabulary = build_lexicon(sentences)
+    kata = [word for word in vocabulary]
+    col2.dataframe(kata)
+    
 if model_dataset == 'wordvec':
-    st.subheader("Word2Vec")
+    st.subheader("Model Word2Vec")
     # preprocess
     col1, col2 = st.beta_columns([3,1])
     col1.subheader("Dataset")
