@@ -40,12 +40,14 @@ model.init_sims(replace = True)
 model.save('word2vec_model')
 model = Word2Vec.load('word2vec_model')
 
-# evaluation
+# vocabulary
+st.subheader("Vocabulary")
 vocabulary = build_lexicon(sentences)
 kata = [word for word in vocabulary]
-st.write(kata)
+st.dataframe(kata)
 
 st.subheader("PIlih kata")
 kata_value = st.sidebar.selectbox('What mode?',kata)
-hasil = model.most_similar(kata[kata_value])
+st.write(kata_value)
+hasil = model.most_similar(kata[0])
 st.write(hasil)
