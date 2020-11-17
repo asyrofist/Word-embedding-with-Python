@@ -23,10 +23,19 @@ def build_lexicon(corpus):
 
 # preprocess
 st.header("Word2Vec")
+st.subheader("Dataset")
+col1, col2 = st.beta_container([3,1])
 sentences = list(gutenberg.sents('shakespeare-hamlet.txt'))   # import the corpus and convert into a list
 for i in range(len(sentences)):
     sentences[i] = [word.lower() for word in sentences[i] if re.match('^[a-zA-Z]+', word)]
-st.dataframe(sentences)
+col1.dataframe(sentences)
+
+# vocabulary
+st.subheader("Vocabulary")
+vocabulary = build_lexicon(sentences)
+kata = [word for word in vocabulary]
+col2.dataframe(kata)
+
 
 # Model
 st.sidebar.subheader("Model Parameter")
@@ -40,11 +49,6 @@ model.init_sims(replace = True)
 model.save('word2vec_model')
 model = Word2Vec.load('word2vec_model')
 
-# vocabulary
-st.subheader("Vocabulary")
-vocabulary = build_lexicon(sentences)
-kata = [word for word in vocabulary]
-st.dataframe(kata)
 
 st.subheader("PIlih kata")
 kata_value = st.selectbox('What mode?',kata)
