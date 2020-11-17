@@ -1,7 +1,6 @@
-nltk==3.2.5
-numpy==1.18.5
-gensim==3.6.0
-multiprocess==0.70.10
-scipy==1.4.1
-glove-python==0.1.0
-glove_python
+nltk>=3.2.5
+numpy>=1.18.5
+gensim>=3.6.0
+multiprocess>=0.70.10
+scipy>=1.4.1
+glove-python>=0.1.0
