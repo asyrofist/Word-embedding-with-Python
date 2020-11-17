@@ -60,7 +60,7 @@ elif  dataset == 'wiki8':
     # preprocess
     col1, col2 = st.beta_columns([3,1])
     col1.subheader("Dataset")
-    sentences = word2vec.Text8Corpus('enwik8')
+    sentences = word2vec.Text8Corpus('http://mattmahoney.net/dc/enwik8.zip')
     col1.dataframe(sentences)
 
     # vocabulary
