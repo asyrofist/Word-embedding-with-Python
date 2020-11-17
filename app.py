@@ -25,7 +25,7 @@ def build_lexicon(corpus):
     return lexicon
 
 pembanding = st.selectbox("What Word Embedded?", ['word2vec', 'doc2vec', 'glove'])
-if pembanidng == 'glove':
+if pembanding == 'glove':
     st.subheader("Glove")
     # preprocess
     col1, col2 = st.beta_columns([3,1])
