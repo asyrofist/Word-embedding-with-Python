@@ -3,6 +3,7 @@ import re
 import numpy as np
 import nltk
 from nltk.corpus import gutenberg
+from glove import Corpus, Glove
 from gensim.models import Word2Vec
 from gensim.models import word2vec
 from gensim.models import KeyedVectors
@@ -38,8 +39,25 @@ if pembanidng == 'glove':
     vocabulary = build_lexicon(sentences)
     kata = [word for word in vocabulary]
     col2.dataframe(kata)
+    
+    # Model
+    st.sidebar.subheader("Model Parameter")
+    window_value = st.sidebar.slider('How many window model?', 0, 10, 3)
+    size_value = st.sidebar.slider('How many size model?', 0, 1000, 100)
+    learning_value = st.sidebar.slider('How many iteration?', 0, 0.1, 0.05)
+    epoch_value = st.sidebar.slider('How many iteration?', 0, 100, 30)
+    
+    corpus = Corpus()
+    corpus.fit(sentences, window = window_value)    # window parameter denotes the distance of context
+    glove = Glove(no_components = size_value, learning_rate = learning_value)
+    glove.fit(matrix = corpus.matrix, epochs = epoch_value, no_threads = Pool()._processes, verbose = True)
+    glove.add_dictionary(corpus.dictionary)    #  supply a word-id dictionary to allow similarity queries
 
-if pembanding == 'word2vec':
+    kata_value = st.selectbox('What mode?',kata)
+    hasil = glove.most_similar(kata_value)
+    st.dataframe(hasil)    
+
+elif pembanding == 'word2vec':
     st.subheader("Word2Vec")
     # preprocess
     col1, col2 = st.beta_columns([3,1])
