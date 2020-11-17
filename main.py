@@ -14,6 +14,7 @@ def cosine_similarity(v1, v2):
     return 1 - spatial.distance.cosine(v1, v2)
 
 # preprocess
+st.header("Word2Vec")
 sentences = list(gutenberg.sents('shakespeare-hamlet.txt'))   # import the corpus and convert into a list
 for i in range(len(sentences)):
     sentences[i] = [word.lower() for word in sentences[i] if re.match('^[a-zA-Z]+', word)]
