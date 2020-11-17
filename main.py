@@ -14,6 +14,12 @@ nltk.download('punkt')
 def cosine_similarity(v1, v2):
     return 1 - spatial.distance.cosine(v1, v2)
 
+def build_lexicon(corpus):
+    lexicon = set()
+    for doc in corpus:
+        lexicon.update([word for word in doc.split()])
+    return lexicon
+
 # preprocess
 st.header("Word2Vec")
 sentences = list(gutenberg.sents('shakespeare-hamlet.txt'))   # import the corpus and convert into a list
@@ -34,8 +40,8 @@ model.save('word2vec_model')
 model = Word2Vec.load('word2vec_model')
 
 # evaluation
-model.most_similar('hamlet')
-options = st.multiselect('What word do you choose?',[word for word in sentences])
+vocabulary = build_lexicon(cleaned_text)
+options = st.multiselect('What word do you choose?',vocabulary)
 v1 = model['king']
 v2 = model['queen']
 hasil_cosine = cosine_similarity(v1, v2)
