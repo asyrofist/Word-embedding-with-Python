@@ -17,13 +17,13 @@ def cosine_similarity(v1, v2):
 def build_lexicon(corpus):
     lexicon = set()
     for doc in corpus:
-#         lexicon.update([word for word in doc.split()])
         lexicon.update([word for word in doc])
     return lexicon
 
 st.header("Word2Vec")
-dataset = st.selectbox('What dataset do you use?',['guttenberg', 'google'])
-if dataset == 'guttenberg':
+dataset_vec = st.selectbox('What dataset do you use?',['guttenberg', 'google'])
+
+if dataset_vec == 'guttenberg':
     # preprocess
     col1, col2 = st.beta_columns([3,1])
     col1.subheader("Dataset")
@@ -55,4 +55,32 @@ if dataset == 'guttenberg':
     st.dataframe(hasil)
 
 if  dataset == 'google':
-    st.write("coba")
+    # preprocess
+    col1, col2 = st.beta_columns([3,1])
+    col1.subheader("Dataset")
+    sentences = list(gutenberg.sents('shakespeare-hamlet.txt'))   # import the corpus and convert into a list
+    for i in range(len(sentences)):
+        sentences[i] = [word.lower() for word in sentences[i] if re.match('^[a-zA-Z]+', word)]
+    col1.dataframe(sentences)
+
+    # vocabulary
+    col2.subheader("Vocabulary")
+    vocabulary = build_lexicon(sentences)
+    kata = [word for word in vocabulary]
+    col2.dataframe(kata)
+
+    # Model
+    st.sidebar.subheader("Model Parameter")
+    mode_value = st.sidebar.selectbox('What mode?',[0, 1])
+    size_value = st.sidebar.slider('What mode?', 0, 1000, 100)
+    window_value = st.sidebar.slider('What mode?', 0, 10, 3)
+    iteration_value = st.sidebar.slider('What mode?', 0, 100, 10)
+    
+    wget -c "https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz"
+    from gensim.models import KeyedVectors
+    filename = 'GoogleNews-vectors-negative300.bin.gz'
+    model = KeyedVectors.load_word2vec_format(filename, binary=True)
+
+    kata_value = st.selectbox('What mode?',kata)
+    hasil = model.most_similar(kata_value)
+    st.dataframe(hasil)
