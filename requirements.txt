@@ -1,5 +1,5 @@
-numpy==1.18.5
-gensim==3.6.0
-nltk
-multiprocessing
-scipy
+nltk>=3.2.5
+numpy>=1.18.5
+gensim>=3.6.0
+multiprocess>=0.70.10
+scipy>=1.4.1
