@@ -40,7 +40,7 @@ if model_data == 'text8':
     col2.dataframe(kata)
     
     #model
-    model = word2vec.Word2Vec.load("/content/drive/MyDrive/RE_dependency/text8_model")
+    model = word2vec.Word2Vec.load("https://drive.google.com/file/d/1-6Z-LpjKzHD3v17e4krODo_XnLR7lJj_/view?usp=sharing")
     kata_value = st.selectbox('What mode?',kata)
     hasil = model.most_similar(kata_value)
     st.dataframe(hasil)
