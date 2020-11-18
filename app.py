@@ -49,3 +49,6 @@ model.init_sims(replace = True)
 kata_value = st.selectbox('What mode?',kata)
 hasil = model.most_similar(kata_value)
 st.dataframe(hasil)
+
+options = st.multiselect('What are your favorite colors',['Green', 'Yellow', 'Red', 'Blue'],['Yellow', 'Red'])
+st.write(options)
