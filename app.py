@@ -39,8 +39,13 @@ if model_data == 'text8':
     kata = [word for word in vocabulary]
     col2.dataframe(kata)
     
+    uploaded_file = st.file_uploader("Choose a file")
+    if uploaded_file is not None:
+        bytes_data = uploaded_file.read()
+        st.write(bytes_data)
+    
     #model
-    model = word2vec.Word2Vec.load("https://drive.google.com/file/d/1-6Z-LpjKzHD3v17e4krODo_XnLR7lJj_/view?usp=sharing")
+    model = word2vec.Word2Vec.load(bytes_data)
     kata_value = st.selectbox('What mode?',kata)
     hasil = model.most_similar(kata_value)
     st.dataframe(hasil)
