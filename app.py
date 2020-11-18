@@ -25,27 +25,17 @@ def build_lexicon(corpus):
 model_data = st.selectbox("Pilih Model", ['wordvec', 'text8'])
 if model_data == 'text8':
     # text8
-    st.subheader("Model Word2Vec")
-    col1, col2 = st.beta_columns([3,1])
-    col1.subheader("Dataset")
-    sentences = list(gutenberg.sents('shakespeare-hamlet.txt'))   # import the corpus and convert into a list
-    for i in range(len(sentences)):
-        sentences[i] = [word.lower() for word in sentences[i] if re.match('^[a-zA-Z]+', word)]
-    col1.dataframe(sentences)
-    
-    # vocabulary
-    col2.subheader("Vocabulary")
-    vocabulary = build_lexicon(sentences)
-    kata = [word for word in vocabulary]
-    col2.dataframe(kata)
-    
-    uploaded_file = st.file_uploader("Choose a file")
-    if uploaded_file is not None:
-        bytes_data = uploaded_file.read()
-        st.write(bytes_data)
     
     #model
-    model = word2vec.Word2Vec.load(bytes_data)
+    sentences = word2vec.Text8Corpus('http://cs.fit.edu/~mmahoney/compression/enwik8.zip')
+    model = word2vec.Word2Vec(sentences, size=200, hs=1)
+    
+    # vocabulary
+    st.subheader("Vocabulary")
+    vocabulary = build_lexicon(sentences)
+    kata = [word for word in vocabulary]
+    st.dataframe(kata)
+    
     kata_value = st.selectbox('What mode?',kata)
     hasil = model.most_similar(kata_value)
     st.dataframe(hasil)
