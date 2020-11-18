@@ -6,6 +6,7 @@ from nltk.corpus import gutenberg
 from gensim.models import Word2Vec
 from multiprocessing import Pool
 from scipy import spatial
+from gensim.models import KeyedVectors
 
 nltk.download('gutenberg')
 nltk.download('punkt')
@@ -19,35 +20,40 @@ def build_lexicon(corpus):
     for doc in corpus:
         lexicon.update([word for word in doc])
     return lexicon
+    
+model_dataset = st.sidebar.selectbox('What mode?',['wordvec', 'googlenews'])
+if model_dataset == 'googlenews':
+    filename = 'https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz'
+    model = KeyedVectors.load_word2vec_format(filename, binary=True)
+    hasil = model.most_similar('king')
+    st.write(hasil)
+    
+elif model_dataset == 'wordvec':
+    # word2vec
+    st.subheader("Model Word2Vec")
+    # preprocess
+    col1, col2 = st.beta_columns([3,1])
+    col1.subheader("Dataset")
+    sentences = list(gutenberg.sents('shakespeare-hamlet.txt'))   # import the corpus and convert into a list
+    for i in range(len(sentences)):
+        sentences[i] = [word.lower() for word in sentences[i] if re.match('^[a-zA-Z]+', word)]
+    col1.dataframe(sentences)
 
-# word2vec
-st.subheader("Model Word2Vec")
+    # vocabulary
+    col2.subheader("Vocabulary")
+    vocabulary = build_lexicon(sentences)
+    kata = [word for word in vocabulary]
+    col2.dataframe(kata)
 
-# preprocess
-col1, col2 = st.beta_columns([3,1])
-col1.subheader("Dataset")
-sentences = list(gutenberg.sents('shakespeare-hamlet.txt'))   # import the corpus and convert into a list
-for i in range(len(sentences)):
-    sentences[i] = [word.lower() for word in sentences[i] if re.match('^[a-zA-Z]+', word)]
-col1.dataframe(sentences)
+    # Model
+    st.sidebar.subheader("Model Parameter")
+    mode_value = st.sidebar.selectbox('What mode?',[0, 1])
+    size_value = st.sidebar.slider('How many size model?', 0, 1000, 100)
+    window_value = st.sidebar.slider('How many window model?', 0, 10, 3)
+    iteration_value = st.sidebar.slider('How many iteration?', 0, 100, 10)
 
-# vocabulary
-col2.subheader("Vocabulary")
-vocabulary = build_lexicon(sentences)
-kata = [word for word in vocabulary]
-col2.dataframe(kata)
-
-# Model
-st.sidebar.subheader("Model Parameter")
-mode_value = st.sidebar.selectbox('What mode?',[0, 1])
-size_value = st.sidebar.slider('How many size model?', 0, 1000, 100)
-window_value = st.sidebar.slider('How many window model?', 0, 10, 3)
-iteration_value = st.sidebar.slider('How many iteration?', 0, 100, 10)
-
-model = Word2Vec(sentences = sentences, size = size_value, sg = mode_value, window = window_value, min_count = 1, iter = iteration_value, workers = Pool()._processes)
-model.init_sims(replace = True)
-#     model.save('word2vec_model')
-#     model = Word2Vec.load('word2vec_model')
-kata_value = st.selectbox('What mode?',kata)
-hasil = model.most_similar(kata_value)
-st.dataframe(hasil)
+    model = Word2Vec(sentences = sentences, size = size_value, sg = mode_value, window = window_value, min_count = 1, iter = iteration_value, workers = Pool()._processes)
+    model.init_sims(replace = True)
+    kata_value = st.selectbox('What mode?',kata)
+    hasil = model.most_similar(kata_value)
+    st.dataframe(hasil)
