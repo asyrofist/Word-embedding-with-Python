@@ -4,6 +4,7 @@ import numpy as np
 import nltk
 from nltk.corpus import gutenberg
 from gensim.models import Word2Vec
+from gensim.models import word2vec
 from multiprocessing import Pool
 from scipy import spatial
 from gensim.models import KeyedVectors
@@ -31,6 +32,19 @@ if model_data == 'text8':
     for i in range(len(sentences)):
         sentences[i] = [word.lower() for word in sentences[i] if re.match('^[a-zA-Z]+', word)]
     col1.dataframe(sentences)
+    
+    # vocabulary
+    col2.subheader("Vocabulary")
+    vocabulary = build_lexicon(sentences)
+    kata = [word for word in vocabulary]
+    col2.dataframe(kata)
+    
+    #model
+    model = word2vec.Word2Vec.load("/content/drive/MyDrive/RE_dependency/text8_model")
+    kata_value = st.selectbox('What mode?',kata)
+    hasil = model.most_similar(kata_value)
+    st.dataframe(hasil)
+
 elif model_data == 'wordvec':
     # word2vec
     st.subheader("Model Word2Vec")
@@ -40,7 +54,8 @@ elif model_data == 'wordvec':
     for i in range(len(sentences)):
         sentences[i] = [word.lower() for word in sentences[i] if re.match('^[a-zA-Z]+', word)]
     col1.dataframe(sentences)
-
+    
+    
     # vocabulary
     col2.subheader("Vocabulary")
     vocabulary = build_lexicon(sentences)
