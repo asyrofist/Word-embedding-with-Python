@@ -21,7 +21,11 @@ def build_lexicon(corpus):
         lexicon.update([word for word in doc])
     return lexicon
     
-model_dataset = st.sidebar.selectbox('What mode?',['wordvec', 'googlenews'])
+model_dataset = st.sidebar.selectbox('What mode?',['wordvec', 'text8', 'googlenews'])
+if model_dataset == 'text8':
+    model = word2vec.Word2Vec.load("https://drive.google.com/file/d/1-6Z-LpjKzHD3v17e4krODo_XnLR7lJj_/view?usp=sharing")
+    hasil = model.most_similar('man')
+    st.write(hasil)
 if model_dataset == 'googlenews':
     filename = 'https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz'
     model = KeyedVectors.load_word2vec_format(filename, binary=True)
